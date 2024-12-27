@@ -2,15 +2,15 @@
   "covert_channel_code": "CSC-PSV-DNS-AAF",
   "send": {
     "parameters": {
-      "log_file_name": "Example_DNS_sender.log",
       "first_input" : -100000000, 
-      "number_bit" : 120
+      "number_bit" : 8,
+      "log_file_name": "Example_DNS_sender.log"
     }
   },
   "receive": {
     "parameters": {
-      "number_bit" : 120, 
       "first_input" : -100000000, 
+      "number_bit" : 8, 
       "log_file_name": "Example_DNS_receiver.log"
     }
   }
