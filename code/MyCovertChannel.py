@@ -16,7 +16,7 @@ class MyCovertChannel(CovertChannelBase):
         - You can edit __init__.
         """
         pass
-    def send(self, first_input, number_bit, log_file_name):
+    def send(self, dst,  first_input, number_bit, log_file_name):
         """
         - Parameters: 
         number_bit: integer
@@ -48,6 +48,7 @@ class MyCovertChannel(CovertChannelBase):
 
         Finally, we send the number as bits over AA flag field in DNS.
         """
+        start = time.time()
         binary_message = self.generate_random_binary_message_with_logging(log_file_name, 16, 16)
         message_to_send_integers = []
         temp_int = 0
@@ -66,11 +67,11 @@ class MyCovertChannel(CovertChannelBase):
             temp_int += random.randint(0, 1)
         message_to_send_integers.append((temp_int - first_input + modulo)%modulo)
 
-        start = time.time()
+        
         for integer in message_to_send_integers:
             str_integer = bin(integer)[2:].zfill(number_bit)
             for bit in str_integer:
-                pkt = IP(dst = "receiver") / UDP() / DNS(aa = int(bit))
+                pkt = IP(dst = dst) / UDP() / DNS(aa = int(bit))
                 super().send(pkt)
         end = time.time()
         print(128/(end - start))
